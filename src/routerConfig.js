@@ -3,7 +3,6 @@
 // 变量名 routerConfig 为 iceworks 检测关键字，请不要修改名称
 
 import HeaderAsideFooterLayout from './layouts/HeaderAsideFooterLayout';
-import Dashboard from './pages/Dashboard';
 import Charts from './pages/Charts';
 import Portlets from './pages/Portlets';
 import Terms from './pages/Terms';

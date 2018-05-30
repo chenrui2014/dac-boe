@@ -3,6 +3,7 @@ import { Grid } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import { Chart, Coord, Geom, Tooltip, Axis, Legend } from 'bizcharts';
 import DataSet from '@antv/data-set';
+import DataBinder from '@icedesign/data-binder';
 
 const { Row, Col } = Grid;
 const { DataView } = DataSet;

@@ -3,6 +3,7 @@ import PieDoughnutChart from './components/PieDoughnutChart';
 import RealTimeStatistics from './components/RealTimeStatistics';
 import BlockChainTable from './components/BlockChainTable';
 import TransactionsTable from './components/TransactionsTable';
+import UserInfoCard from "./components/UserInfoCard/UserInfoCard";
 
 export default class Page15 extends Component {
   static displayName = 'Page15';
@@ -12,6 +13,9 @@ export default class Page15 extends Component {
     this.state = {};
   }
 
+  componentDidMount(){
+
+  }
   render() {
     return (
       <div className="page15-page">
@@ -19,6 +23,7 @@ export default class Page15 extends Component {
         <PieDoughnutChart />
         <BlockChainTable />
         <TransactionsTable />
+        <UserInfoCard/>
       </div>
     );
   }
