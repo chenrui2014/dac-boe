@@ -88,7 +88,7 @@ export default class UserPaintTable extends Component {
 
     return (
       <div className="simple-table">
-        <IceContainer>
+        <IceContainer title="用户作品">
           <Table
             dataSource={userPaintData.list}
             isLoading={userPaintData.__loading} // eslint-disable-line

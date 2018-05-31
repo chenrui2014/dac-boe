@@ -87,7 +87,7 @@ export default class UserTransactionTable extends Component {
 
     return (
       <div className="simple-table">
-        <IceContainer>
+        <IceContainer title="用户交易">
           <Table
             dataSource={userTransactionData.list}
             isLoading={userTransactionData.__loading} // eslint-disable-line
