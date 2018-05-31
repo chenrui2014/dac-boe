@@ -78,7 +78,7 @@ export default class UserTransactionTable extends Component {
 
   changePage = (currentPage) => {
     this.fetchData({
-      page: currentPage,
+      page: (currentPage - 1),
     });
   };
 
@@ -103,7 +103,7 @@ export default class UserTransactionTable extends Component {
           </Table>
           <div style={styles.paginationWrapper}>
             <Pagination
-              current={userTransactionData.page}
+              current={userTransactionData.page + 1}
               pageSize={userTransactionData.size}
               total={userTransactionData.total}
               onChange={this.changePage}
