@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import IceContainer from '@icedesign/container';
-import { Balloon, Icon } from '@icedesign/base';
-// import axios from 'axios';
+import { Balloon } from '@icedesign/base';
 import DataBinder from '@icedesign/data-binder';
 
 @DataBinder({
@@ -9,32 +8,32 @@ import DataBinder from '@icedesign/data-binder';
     url:'http://localhost:8080/user/search/findByUserName',
     method:'get',
     params:{
-      userName:'chen'
+      userName:'chen',
     },
     responseFormatter:(responseHandler, res, originResponse) => {
       const newRes = {
-        status: "SUCCESS",
+        status: 'SUCCESS',
         message:'SUCCESS',
         data:{
-          userName:res.userName,
-          password:res.password,
-          email:res.email,
-          nickName:res.nickName,
-          regTime:res.regTime,
-          hashString:res.hashString
-        }
+          userName: res.userName,
+          password: res.password,
+          email: res.email,
+          nickName: res.nickName,
+          regTime: res.regTime,
+          hashString: res.hashString,
+        },
       };
-      responseHandler(newRes,originResponse);
+      responseHandler(newRes, originResponse);
     },
     defaultBindingData:{
-      userName:'',
-      password:'',
-      email:'',
-      nickName:'',
-      regTime:'',
-      hashString:''
-    }
-  }
+      userName: '',
+      password: '',
+      email: '',
+      nickName: '',
+      regTime: '',
+      hashString: '',
+    },
+  },
 })
 
 export default class UserInfoCard extends Component {
@@ -44,29 +43,8 @@ export default class UserInfoCard extends Component {
 
   static defaultProps = {};
 
-  constructor(props) {
-    super(props);
-    //this.state = {user:{userName:''}};
-  }
-
-  /**componentWillMount() {
-    axios({
-      method:'get',
-      url:'http://localhost:8080/user/search/findByUserName',
-      params:{
-        userName:'chen'
-      },
-      headers: {'Content-Type': 'application/json'},
-    }).then((response) => {
-      const { body } = response;
-      this.setState({
-        user: body,
-      });
-    });
-  }**/
-
   componentDidMount() {
-    this.props.updateBindingData('users')
+    this.props.updateBindingData('users');
   }
 
   render() {
