@@ -22,12 +22,13 @@ export default class UploadCard extends Component {
     console.log('收到表单值：', this.field.getValues());
     this.field.validate();
     axios.post({
-      url:'http://localhost:8080/painting',
+      url:'http://localhost:8080/api/upload',
       data:{
-        paintName:this.field.paintName,
-        author:this.field.author,
-        type:this.field.type,
-        status:this.field.status
+        paintingName:this.field.paintingName,
+        paintingDes:this.field.paintingDes,
+        paintingHash:this.field.paintingHash,
+        paintingType:this.field.paintingType,
+        author:this.field.author
       }
     });
   }
@@ -81,7 +82,7 @@ export default class UploadCard extends Component {
     };
 
     return (
-      <Form direction="hoz" field={this.field}>
+      <Form style={{ width:'600px', marginLeft:'auto', marginRight:'auto' }} direction="hoz" field={this.field}>
         <FormItem>
           <Core
             style={{
@@ -107,7 +108,7 @@ export default class UploadCard extends Component {
             onSuccess={this.onSuccess}
             onError={this.onError}
             onAbort={this.onAbort}
-            {...init('files', {
+            {...init('paintingHash', {
               valueName: 'fileList',
               getValueFromEvent: this.getValueFromFile
             })}
@@ -122,7 +123,7 @@ export default class UploadCard extends Component {
                 <Input
                   placeholder="请输入作品名称"
                   style={{ width: 200 }}
-                  {...init('paintName', {
+                  {...init('paintingName', {
                     rules: [{ required: true, trigger: 'onBlur' }]
                   })}
                 />
@@ -151,7 +152,7 @@ export default class UploadCard extends Component {
                   hasLimitHint
                   placeholder="请输入作品描述"
                   style={{ width: 200 }}
-                  {...init('status')}
+                  {...init('paintingDes')}
                 />
               </FormItem>
             </Col>
@@ -163,7 +164,7 @@ export default class UploadCard extends Component {
                   defaultValue="1"
                   placeholder="请选择作品类型"
                   style={{ width: 200 }}
-                  {...init('type')}
+                  {...init('paintingType')}
                 >
                   <li value="1">印象画</li>
                   <li value="2">山水画</li>

@@ -49,7 +49,7 @@
     "comma-dangle": "off",
     "class-methods-use-this":"off",
     "no-underscore-dangle":"off",
-    "linebreak-style":["error", "windows"],
+    "linebreak-style":"off",
     "no-trailing-spaces":"off",
     "key-spacing": "off",
     "function-paren-newline": 0,

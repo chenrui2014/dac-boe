@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Table, Pagination, Button } from '@icedesign/base';
+import { Table, Pagination, Button, Icon } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import DataBinder from '@icedesign/data-binder';
+import EditorInfoDialog from './EditorInfoDialog';
 
 import { enquireScreen } from 'enquire-js';
 
@@ -33,6 +34,10 @@ import { enquireScreen } from 'enquire-js';
       totalPage:10,
       size: 10,
       page: 0,
+    },
+    updateTableData:{
+      url:'http://localhost:8080/painting',
+      method:'put'
     }
   },
 })
@@ -80,6 +85,54 @@ export default class PaintingsTable extends Component {
     });
   };
 
+  editItem = (record, e) => {
+    e.preventDefault();
+    EditorInfoDialog.show({
+      value: record,
+      onOk: (value) => {
+        // 更新数据
+        this.props.updateBindingData(
+          'updateTableData',
+          {
+            data: {
+              // 复杂数据结构需要 JSON stringify
+              newItem: JSON.stringify(value),
+            },
+          },
+          () => {
+            // 更新完成之后，可以重新刷新列表接口
+            this.props.updateBindingData('tableData', {
+              data: {
+                page: 1,
+              },
+            });
+            EditorInfoDialog.hide();
+          }
+        );
+      },
+      onClose: () => {
+        EditorInfoDialog.hide();
+      },
+      onCancel: () => {
+        EditorInfoDialog.hide();
+      },
+    });
+  };
+
+  renderOperations = (value, index, record) => {
+    return (
+      <div className="operation-table-operation">
+        <Button
+          type="primary"
+          onClick={this.editItem.bind(this, record)}
+        >
+          购买
+        </Button >
+      </div>
+    );
+  };
+
+
   render() {
     const paintData = this.props.bindingData.paintData;
 
@@ -99,6 +152,12 @@ export default class PaintingsTable extends Component {
             <Table.Column title="作品类型" dataIndex="type" width={150} />
             <Table.Column title="存证" dataIndex="depCerticateId" width={150} />
             <Table.Column title="生成时间" dataIndex="regTime" width={150} />
+            <Table.Column
+              title="操作"
+              dataIndex="operation"
+              width={150}
+              cell={this.renderOperations}
+            />
           </Table>
           <div style={styles.paginationWrapper}>
             <Pagination
@@ -123,5 +182,28 @@ const styles = {
   paginationWrapper: {
     textAlign: 'right',
     paddingTop: '26px',
+  },
+  cardContainer: {
+    padding: '10px 10px 20px 10px',
+  },
+  titleCol: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  titleText: {
+    marginLeft: '10px',
+    lineHeight: '20px',
+  },
+  operBtn: {
+    display: 'inline-block',
+    width: '24px',
+    height: '24px',
+    borderRadius: '999px',
+    color: '#929292',
+    background: '#f2f2f2',
+    textAlign: 'center',
+    cursor: 'pointer',
+    lineHeight: '24px',
+    marginRight: '6px',
   },
 };
