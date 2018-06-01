@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import RightContentDisplay from './components/RightContentDisplay';
+import IceContainer from '@icedesign/container';
+import UploadCard from './components/UploadCard/UploadCard';
 
 export default class Page16 extends Component {
   static displayName = 'Page16';
@@ -12,7 +13,9 @@ export default class Page16 extends Component {
   render() {
     return (
       <div className="page16-page">
-        <RightContentDisplay />
+        <IceContainer title="上传作品">
+          <UploadCard />
+        </IceContainer>
       </div>
     );
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SortableTable from './components/SortableTable';
+import PaintingsTable from './components/PainTingTable/PaintingsTable';
 
 export default class Page17 extends Component {
   static displayName = 'Page17';
@@ -12,7 +12,7 @@ export default class Page17 extends Component {
   render() {
     return (
       <div className="page17-page">
-        <SortableTable />
+        <PaintingsTable />
       </div>
     );
   }
