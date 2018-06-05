@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Pagination, Button, Icon } from '@icedesign/base';
+import { Table, Pagination, Button } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import DataBinder from '@icedesign/data-binder';
 import EditorInfoDialog from './EditorInfoDialog';
@@ -8,7 +8,7 @@ import { enquireScreen } from 'enquire-js';
 
 @DataBinder({
   paintData: {
-    url: 'http://localhost:8080/painting',
+    url: 'http://localhost:8080/paintingsPerPage',
     method: 'get',
     params: {
       page: 0,
@@ -19,11 +19,11 @@ import { enquireScreen } from 'enquire-js';
         status: 'SUCCESS',
         message:'SUCCESS',
         data:{
-          list: res._embedded.painting,
-          total: res.page.totalElements,
-          size: res.page.size,
-          page: res.page.number,
-          totalPage:res.page.totalPages
+          list: res.data,
+          total: res.totalElements,
+          size: res.size,
+          page: res.number,
+          totalPage:res.totalPages
         },
       };
       responseHandler(newRes, originResponse);
@@ -147,10 +147,11 @@ export default class PaintingsTable extends Component {
           >
             <Table.Column title="画作名称" dataIndex="paintName" width={300} />
             <Table.Column title="画作作者" dataIndex="author" width={85} />
-            <Table.Column title="画作所有者" dataIndex="userId" width={85} />
-            <Table.Column title="所属区块" dataIndex="paintHash" width={150} />
+            <Table.Column title="画作所有者" dataIndex="userName" width={85} />
+            <Table.Column title="交易号" dataIndex="transactionId" width={150} />
             <Table.Column title="作品类型" dataIndex="type" width={150} />
-            <Table.Column title="存证" dataIndex="depCerticateId" width={150} />
+            <Table.Column title="作品定价" dataIndex="paintingPrice" width={150} />
+            <Table.Column title="版权证书" dataIndex="depCerticateId" width={150} />
             <Table.Column title="生成时间" dataIndex="regTime" width={150} />
             <Table.Column
               title="操作"

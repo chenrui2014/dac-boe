@@ -17,7 +17,7 @@ export default class UploadCard extends Component {
     };
   }
   field = new Field(this);
-  handleSubmit(e) {
+  handleClick(e) {
     e.preventDefault();
     console.log('收到表单值：', this.field.getValues());
     this.field.validate();
@@ -179,7 +179,7 @@ export default class UploadCard extends Component {
 
         <Row style={{ marginTop: 16 }}>
           <Col offset="6">
-            <Button type="primary" onClick={this.handleSubmit.bind(this)}>
+            <Button type="primary" onClick={this.handleClick.bind(this)}>
               上传作品
             </Button>
           </Col>

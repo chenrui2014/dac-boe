@@ -7,7 +7,7 @@ import { enquireScreen } from 'enquire-js';
 
 @DataBinder({
   transactionData: {
-    url: 'http://localhost:8080/tran',
+    url: 'http://localhost:8080/transPerPage',
     method: 'get',
     params: {
       page: 0,
@@ -18,11 +18,11 @@ import { enquireScreen } from 'enquire-js';
         status: 'SUCCESS',
         message:'SUCCESS',
         data:{
-          list: res._embedded.transactions,
-          total: res.page.totalElements,
-          size: res.page.size,
-          page: res.page.number,
-          totalPage:res.page.totalPages
+          list: res.data,
+          total: res.totalElements,
+          size: res.size,
+          page: res.number,
+          totalPage:res.totalPages
         },
       };
       responseHandler(newRes, originResponse);
@@ -93,10 +93,11 @@ export default class TransactionTable extends Component {
             hasBorder={false}
           >
             <Table.Column title="交易哈希" dataIndex="tranHash" width={300} />
-            <Table.Column title="交易发起方" dataIndex="initiator" width={85} />
-            <Table.Column title="交易接收方" dataIndex="receiver" width={85} />
+            <Table.Column title="交易发起方" dataIndex="initiatorUserName" width={85} />
+            <Table.Column title="交易接收方" dataIndex="receiverUserName" width={85} />
             <Table.Column title="所属区块" dataIndex="regBlock" width={150} />
-            <Table.Column title="交易标的" dataIndex="paintHash" width={150} />
+            <Table.Column title="交易标的" dataIndex="paintingName" width={150} />
+            <Table.Column title="交易价格" dataIndex="tranAmount" width={150} />
             <Table.Column title="生成时间" dataIndex="genTime" width={150} />
           </Table>
           <div style={styles.paginationWrapper}>

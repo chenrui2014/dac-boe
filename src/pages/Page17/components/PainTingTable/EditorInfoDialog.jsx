@@ -113,7 +113,7 @@ class FormDialog extends Component {
             </Row>
             <Row>
               <Col span={4}>
-                <span style={styles.label}>生成事件</span>
+                <span style={styles.label}>生成时间</span>
               </Col>
               <Col span={18}>
                 <IceFormBinder>

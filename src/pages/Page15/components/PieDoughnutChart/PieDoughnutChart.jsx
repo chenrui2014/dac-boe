@@ -3,7 +3,6 @@ import { Grid } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import { Chart, Coord, Geom, Tooltip, Axis, Legend } from 'bizcharts';
 import DataSet from '@antv/data-set';
-import DataBinder from '@icedesign/data-binder';
 
 const { Row, Col } = Grid;
 const { DataView } = DataSet;
@@ -75,7 +74,7 @@ export default class PieDoughnutChart extends Component {
             </IceContainer>
           </Col>
           <Col xxs="24" s="24" l="12">
-            <IceContainer title="年龄分布" style={styles.rightContainer}>
+            <IceContainer title="收益占比" style={styles.rightContainer}>
               <Chart
                 style={styles.chart}
                 width={450}
