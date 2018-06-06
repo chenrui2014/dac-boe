@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PieDoughnutChart from './components/PieDoughnutChart';
 import RealTimeStatistics from './components/RealTimeStatistics';
-import UserInfoCard from './components/UserInfoCard/UserInfoCard';
 import UserPaintTable from './components/UserPaintTable/UserPaintTable';
 import UserTransactionTable from './components/UserTransactionTable/UserTransactionTable';
 
