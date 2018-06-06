@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Upload, Button, Select, Input, Grid } from '@icedesign/base';
+import { Upload, Button, Select, Input, Grid, moment } from '@icedesign/base';
 import Img from '@icedesign/img';
 import axios from 'axios';
 
@@ -59,17 +59,19 @@ export default class UploadCard extends Component {
     this.setState({ type:event.value });
   }
 
-  handleClick() {
-    axios.post({
+  handleClick = () => {
+    axios({
       url:'http://localhost:8080/addPainting',
-      data:{
+      method: 'POST',
+      data: {
         user:this.state.userId,
         paintName:this.state.paintName,
         paintDes:this.state.paintDes,
         denPainting:this.state.denPainting,
         type:this.state.type,
         paintUrl:this.state.paintUrl,
-        author:this.state.author
+        author:this.state.author,
+        regTime: moment().format('YYYY-MM-DD HH:mm:ss')
       }
     });
   }
