@@ -44,7 +44,7 @@ export default class RealTimeStatistics extends Component {
           <Col xxs="24" s="12" l="6">
             <div style={{ ...styles.itemBody, ...styles.darkBlue }}>
               <div style={styles.itemTitle}>
-                <p style={styles.titleText}>应用总数</p>
+                <p style={styles.titleText}>节点数</p>
                 <span style={styles.tag}>实时</span>
               </div>
               <div style={styles.itemContent}>
@@ -55,7 +55,7 @@ export default class RealTimeStatistics extends Component {
           <Col xxs="24" s="12" l="6">
             <div style={{ ...styles.itemBody, ...styles.navyBlue }}>
               <div style={styles.itemTitle}>
-                <p style={styles.titleText}>合约总数</p>
+                <p style={styles.titleText}>合约数</p>
                 <span style={styles.tag}>实时</span>
               </div>
               <div style={styles.itemContent}>

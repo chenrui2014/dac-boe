@@ -7,7 +7,7 @@ import { enquireScreen } from 'enquire-js';
 
 @DataBinder({
   userPaintData: {
-    url: 'http://localhost:8080/painting/search/findByUserIdOrderByRegTimeDesc',
+    url: 'http://localhost:8080/userPaintingsPerPage',
     method: 'get',
     params: {
       userId: 1,
@@ -19,11 +19,11 @@ import { enquireScreen } from 'enquire-js';
         status: 'SUCCESS',
         message:'SUCCESS',
         data:{
-          list: res._embedded.painting,
-          total: res.page.totalElements,
-          size: res.page.size,
-          page: res.page.number,
-          totalPage:res.page.totalPages
+          list: res.data,
+          total: res.totalElements,
+          size: res.size,
+          page: res.number,
+          totalPage:res.totalPages
         },
       };
       responseHandler(newRes, originResponse);
@@ -93,11 +93,12 @@ export default class UserPaintTable extends Component {
             className="basic-table"
             hasBorder={false}
           >
-            <Table.Column title="画作名称" dataIndex="paintName" width={300} />
+            <Table.Column title="画作名称" dataIndex="paintName" width={200} />
             <Table.Column title="画作作者" dataIndex="author" width={85} />
-            <Table.Column title="画作所有者" dataIndex="userId" width={85} />
-            <Table.Column title="交易号" dataIndex="paintHash" width={150} />
-            <Table.Column title="作品类型" dataIndex="type" width={150} />
+            <Table.Column title="画作所有者" dataIndex="userName" width={100} />
+            <Table.Column title="交易号" dataIndex="transactionId" width={150} />
+            <Table.Column title="作品类型" dataIndex="type" width={100} />
+            <Table.Column title="作品定价" dataIndex="paintingPrice" width={100} />
             <Table.Column title="版权证书" dataIndex="depCerticateId" width={150} />
             <Table.Column title="生成时间" dataIndex="regTime" width={150} />
           </Table>

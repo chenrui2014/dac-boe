@@ -19,7 +19,6 @@ export default class Page15 extends Component {
         <PieDoughnutChart />
         <UserPaintTable />
         <UserTransactionTable />
-        <UserInfoCard />
       </div>
     );
   }

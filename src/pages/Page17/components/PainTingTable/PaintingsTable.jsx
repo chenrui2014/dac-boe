@@ -145,12 +145,12 @@ export default class PaintingsTable extends Component {
             className="basic-table"
             hasBorder={false}
           >
-            <Table.Column title="画作名称" dataIndex="paintName" width={300} />
+            <Table.Column title="画作名称" dataIndex="paintName" width={200} />
             <Table.Column title="画作作者" dataIndex="author" width={85} />
-            <Table.Column title="画作所有者" dataIndex="userName" width={85} />
+            <Table.Column title="画作所有者" dataIndex="userName" width={100} />
             <Table.Column title="交易号" dataIndex="transactionId" width={150} />
-            <Table.Column title="作品类型" dataIndex="type" width={150} />
-            <Table.Column title="作品定价" dataIndex="paintingPrice" width={150} />
+            <Table.Column title="作品类型" dataIndex="type" width={100} />
+            <Table.Column title="作品定价" dataIndex="paintingPrice" width={100} />
             <Table.Column title="版权证书" dataIndex="depCerticateId" width={150} />
             <Table.Column title="生成时间" dataIndex="regTime" width={150} />
             <Table.Column

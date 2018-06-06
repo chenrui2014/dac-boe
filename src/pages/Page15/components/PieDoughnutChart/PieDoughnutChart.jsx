@@ -18,11 +18,10 @@ export default class PieDoughnutChart extends Component {
     ];
 
     const data2 = [
-      { genre: '10~20岁', sold: 500 },
-      { genre: '20~30岁', sold: 200 },
-      { genre: '40~50岁', sold: 100 },
-      { genre: '60~70岁', sold: 40 },
-      { genre: '80~90岁', sold: 30 },
+      { genre: '蒙娜丽莎的微笑', sold: 500 },
+      { genre: '日出·印象', sold: 200 },
+      { genre: '撑阳伞的女孩', sold: 100 },
+      { genre: '最后的晚餐', sold: 70 },
     ];
     const dv = new DataView();
     const dv2 = new DataView();
