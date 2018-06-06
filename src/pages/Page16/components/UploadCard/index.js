@@ -1,3 +1,3 @@
-import UploadCard from './UploadCard'
+import UploadCard from './UploadCard';
 
 export default UploadCard;

@@ -81,6 +81,15 @@ export default class UserPaintTable extends Component {
     });
   };
 
+  paintImgRender = (value, index, record) => {
+    return (
+      <div style={styles.media}>
+        {record.paintUrl ? <img alt="" src={record.paintUrl} style={styles.mediaSide} /> : null }
+        <div style={styles.mediaContent}>{record.paintName}</div>
+      </div>
+    );
+  }
+
   render() {
     const userPaintData = this.props.bindingData.userPaintData;
 
@@ -93,9 +102,10 @@ export default class UserPaintTable extends Component {
             className="basic-table"
             hasBorder={false}
           >
-            <Table.Column title="画作名称" dataIndex="paintName" width={200} />
+            <Table.Column cell={this.paintImgRender} title="画作名称" dataIndex="paintName" width={200} />
             <Table.Column title="画作作者" dataIndex="author" width={85} />
             <Table.Column title="画作所有者" dataIndex="userName" width={100} />
+            <Table.Column title="数字指纹" dataIndex="digFingerPrint" width={100} />
             <Table.Column title="交易号" dataIndex="transactionId" width={150} />
             <Table.Column title="作品类型" dataIndex="type" width={100} />
             <Table.Column title="作品定价" dataIndex="paintingPrice" width={100} />
@@ -126,4 +136,18 @@ const styles = {
     textAlign: 'right',
     paddingTop: '26px',
   },
+
+  media: {
+    overflow: 'hidden'
+  },
+  mediaSide: {
+    width:'48px',
+    height:'48px',
+    float: 'left',
+    marginRight: '10px'
+  },
+  mediaContent: {
+    overflow:'hidden',
+    verticalAlign:'top'
+  }
 };

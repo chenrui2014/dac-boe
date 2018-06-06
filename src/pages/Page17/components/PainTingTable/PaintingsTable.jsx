@@ -12,7 +12,7 @@ import { enquireScreen } from 'enquire-js';
     method: 'get',
     params: {
       page: 0,
-      size: 2
+      size: 10
     },
     responseFormatter:(responseHandler, res, originResponse) => {
       const newRes = {
@@ -132,6 +132,15 @@ export default class PaintingsTable extends Component {
     );
   };
 
+  paintImgRender = (value, index, record) => {
+    return (
+      <div style={styles.media}>
+        {record.paintUrl ? <img alt="" src={record.paintUrl} style={styles.mediaSide} /> : null }
+        <div style={styles.mediaContent}>{record.paintName}</div>
+      </div>
+    );
+  }
+
 
   render() {
     const paintData = this.props.bindingData.paintData;
@@ -145,18 +154,20 @@ export default class PaintingsTable extends Component {
             className="basic-table"
             hasBorder={false}
           >
-            <Table.Column title="画作名称" dataIndex="paintName" width={200} />
+            <Table.Column cell={this.paintImgRender} title="画作名称" dataIndex="paintName" width={200} />
             <Table.Column title="画作作者" dataIndex="author" width={85} />
             <Table.Column title="画作所有者" dataIndex="userName" width={100} />
-            <Table.Column title="交易号" dataIndex="transactionId" width={150} />
+            <Table.Column title="数字指纹" dataIndex="digFingerPrint" width={100} />
+            <Table.Column title="交易号" dataIndex="transactionId" width={100} />
             <Table.Column title="作品类型" dataIndex="type" width={100} />
             <Table.Column title="作品定价" dataIndex="paintingPrice" width={100} />
             <Table.Column title="版权证书" dataIndex="depCerticateId" width={150} />
             <Table.Column title="生成时间" dataIndex="regTime" width={150} />
             <Table.Column
               title="操作"
+              fixedHeader
               dataIndex="operation"
-              width={150}
+              width={100}
               cell={this.renderOperations}
             />
           </Table>
@@ -207,4 +218,17 @@ const styles = {
     lineHeight: '24px',
     marginRight: '6px',
   },
+  media: {
+    overflow: 'hidden'
+  },
+  mediaSide: {
+    width:'48px',
+    height:'48px',
+    float: 'left',
+    marginRight: '10px'
+  },
+  mediaContent: {
+    overflow:'hidden',
+    verticalAlign:'top'
+  }
 };
