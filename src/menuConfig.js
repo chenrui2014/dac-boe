@@ -40,6 +40,11 @@ const asideMenuConfig = [
     path: '/page18',
     icon: 'rmb',
   },
+  {
+    name: '收益明细',
+    path: '/page18',
+    icon: 'redpacket',
+  },
 ];
 
 export { headerMenuConfig, asideMenuConfig };
