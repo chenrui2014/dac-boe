@@ -13,9 +13,7 @@ export default class Page16 extends Component {
   render() {
     return (
       <div className="page16-page">
-        <IceContainer title="上传作品">
-          <UploadCard />
-        </IceContainer>
+        <UploadCard />
       </div>
     );
   }
