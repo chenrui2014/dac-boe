@@ -36,7 +36,7 @@ export default class UploadCard extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:8080/paintings')
+    axios.get('http://localhost:8080/userPaintingsNoPage')
       .then((response) => {
         const data = response.data.map((item) => {
           return { label:item.paintName, value:item.id };

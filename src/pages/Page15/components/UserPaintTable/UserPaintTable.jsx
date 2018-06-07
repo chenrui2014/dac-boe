@@ -10,9 +10,9 @@ import { enquireScreen } from 'enquire-js';
     url: 'http://localhost:8080/userPaintingsPerPage',
     method: 'get',
     params: {
-      userId: 1,
+      userId: 2,
       page: 0,
-      size: 2
+      size: 10
     },
     responseFormatter:(responseHandler, res, originResponse) => {
       const newRes = {

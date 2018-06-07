@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Table, Pagination, Button } from '@icedesign/base';
+import { Table, Pagination, Button, moment } from '@icedesign/base';
+import { enquireScreen } from 'enquire-js';
+import axios from 'axios/index';
 import IceContainer from '@icedesign/container';
 import DataBinder from '@icedesign/data-binder';
 import EditorInfoDialog from './EditorInfoDialog';
-
-import { enquireScreen } from 'enquire-js';
 
 @DataBinder({
   paintData: {
@@ -39,7 +39,7 @@ import { enquireScreen } from 'enquire-js';
       url:'http://localhost:8080/painting',
       method:'put'
     }
-  },
+  }
 })
 
 export default class PaintingsTable extends Component {
@@ -90,25 +90,43 @@ export default class PaintingsTable extends Component {
     EditorInfoDialog.show({
       value: record,
       onOk: (value) => {
-        // 更新数据
-        this.props.updateBindingData(
-          'updateTableData',
-          {
-            data: {
-              // 复杂数据结构需要 JSON stringify
-              newItem: JSON.stringify(value),
-            },
-          },
-          () => {
-            // 更新完成之后，可以重新刷新列表接口
-            this.props.updateBindingData('tableData', {
-              data: {
-                page: 1,
-              },
-            });
-            EditorInfoDialog.hide();
+        axios({
+          url:'http://localhost:8080/addPainting',
+          method: 'POST',
+          data: {
+            userId:2,
+            paintName:record.paintName,
+            paintDes:record.paintDes,
+            denPaintId:record.denPainting,
+            type:record.type,
+            paintUrl:record.paintUrl,
+            author:record.author,
+            regTime: moment().format('YYYY-MM-DD HH:mm:ss')
           }
-        );
+        }).then((response) => {
+          console.log(response);
+          // 更新数据
+          this.props.updateBindingData(
+            'updateTableData',
+            {
+              data: {
+                // 复杂数据结构需要 JSON stringify
+                newItem: JSON.stringify(value),
+              },
+            },
+            () => {
+              // 更新完成之后，可以重新刷新列表接口
+              this.props.updateBindingData('paintData', {
+                data: {
+                  page: 1,
+                },
+              });
+              EditorInfoDialog.hide();
+            }
+          );
+        }).catch((error) => {
+          console.log(error);
+        });
       },
       onClose: () => {
         EditorInfoDialog.hide();
