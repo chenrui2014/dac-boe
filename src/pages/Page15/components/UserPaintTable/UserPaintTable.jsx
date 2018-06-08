@@ -7,7 +7,7 @@ import { enquireScreen } from 'enquire-js';
 
 @DataBinder({
   userPaintData: {
-    url: 'http://localhost:8080/userPaintingsPerPage',
+    url: 'http://172.100.0.146:8080/userPaintingsPerPage',
     method: 'get',
     params: {
       userId: 2,

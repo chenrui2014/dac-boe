@@ -10,8 +10,8 @@ import PaintingChain from '../PaintingChain';
 
 const { Core } = Upload;
 const { Row, Col } = Grid;
-const imageRootPath = 'http://localhost:8080/images/';
-const userPaintingUrl = 'http://localhost:8080/userPaintingsNoPage?userId=';
+const imageRootPath = 'http://172.100.0.146:8080/images/';
+const userPaintingUrl = 'http://172.100.0.146:8080/userPaintingsNoPage?userId=';
 
 export default class UploadCard extends Component {
   constructor(props, context) {
@@ -108,7 +108,7 @@ export default class UploadCard extends Component {
   handleClick = () => {
     const $this = this;
     axios({
-      url:'http://localhost:8080/addPainting',
+      url:'http://172.100.0.146:8080/addPainting',
       method: 'POST',
       data: {
         userId:this.state.userId,

@@ -7,7 +7,7 @@ import { enquireScreen } from 'enquire-js';
 
 @DataBinder({
   userTransactionData: {
-    url: 'http://localhost:8080/userTransPerPage',
+    url: 'http://172.100.0.146:8080/userTransPerPage',
     method: 'get',
     params: {
       userId: 2,

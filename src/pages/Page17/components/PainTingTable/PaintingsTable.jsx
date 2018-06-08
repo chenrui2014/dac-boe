@@ -8,7 +8,7 @@ import EditorInfoDialog from './EditorInfoDialog';
 
 @DataBinder({
   paintData: {
-    url: 'http://localhost:8080/paintingsPerPage',
+    url: 'http://172.100.0.146:8080/paintingsPerPage',
     method: 'get',
     params: {
       page: 0,
@@ -36,7 +36,7 @@ import EditorInfoDialog from './EditorInfoDialog';
       page: 0,
     },
     updateTableData:{
-      url:'http://localhost:8080/painting',
+      url:'http://172.100.0.146:8080/painting',
       method:'put'
     }
   }
@@ -91,7 +91,7 @@ export default class PaintingsTable extends Component {
       value: record,
       onOk: (value) => {
         axios({
-          url:'http://localhost:8080/addPainting',
+          url:'http://172.100.0.146:8080/addPainting',
           method: 'POST',
           data: {
             userId:2,
