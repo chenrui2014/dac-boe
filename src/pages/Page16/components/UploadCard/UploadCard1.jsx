@@ -20,16 +20,17 @@ export default class UploadCard extends Component {
   handleClick(e) {
     e.preventDefault();
     console.log('收到表单值：', this.field.getValues());
-    this.field.validate();
-    axios.post({
-      url:'http://localhost:8080/api/upload',
-      data:{
-        paintingName:this.field.paintingName,
-        paintingDes:this.field.paintingDes,
-        paintingHash:this.field.paintingHash,
-        paintingType:this.field.paintingType,
-        author:this.field.author
-      }
+    this.field.validate(() => {
+      axios.post({
+        url:'http://localhost:8080/api/upload',
+        data:{
+          paintingName:this.field.paintingName,
+          paintingDes:this.field.paintingDes,
+          paintingHash:this.field.paintingHash,
+          paintingType:this.field.paintingType,
+          author:this.field.author
+        }
+      });
     });
   }
 

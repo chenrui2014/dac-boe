@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import IceContainer from '@icedesign/container';
 import UploadCard from './components/UploadCard/UploadCard';
 
 export default class Page16 extends Component {

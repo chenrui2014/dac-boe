@@ -7,6 +7,7 @@ import Page15 from './pages/Page15';
 import Page16 from './pages/Page16';
 import Page17 from './pages/Page17';
 import Page18 from './pages/Page18';
+import Page19 from './pages/Page19';
 import NotFound from './pages/NotFound';
 
 const routerConfig = [
@@ -34,6 +35,11 @@ const routerConfig = [
     path: '/page18',
     layout: HeaderAsideFooterResponsiveLayout,
     component: Page18,
+  },
+  {
+    path: '/page19',
+    layout: HeaderAsideFooterResponsiveLayout,
+    component: Page19,
   },
   {
     path: '*',

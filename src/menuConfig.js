@@ -42,7 +42,7 @@ const asideMenuConfig = [
   },
   {
     name: '收益明细',
-    path: '/page18',
+    path: '/page19',
     icon: 'redpacket',
   },
 ];

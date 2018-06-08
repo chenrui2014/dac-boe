@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Upload, Button, Select, Input, Grid, moment } from '@icedesign/base';
+import { Upload, Button, Select, Input,Form, Field, Grid, moment } from '@icedesign/base';
 import Img from '@icedesign/img';
 import IceContainer from '@icedesign/container';
-import IceLabel from '@icedesign/label';
 import axios from 'axios';
 import qs from 'qs';
 
@@ -10,8 +9,8 @@ import PaintingChain from '../PaintingChain';
 
 const { Core } = Upload;
 const { Row, Col } = Grid;
+const FormItem = Form.Item;
 const imageRootPath = 'http://localhost:8080/images/';
-const userPaintingUrl = 'http://localhost:8080/userPaintingsNoPage?userId=';
 
 export default class UploadCard extends Component {
   constructor(props, context) {
@@ -19,19 +18,15 @@ export default class UploadCard extends Component {
     this.state = {
       postSuccess: false,
       responseData: [],
-      uploadStatus: false,
+      uploadSatus: false,
       paintingSelectData: [],
       userId:2,
       paintName:'',
       paintDes:'',
-      paintingPrice:'',
       denPainting:null,
       type:null,
       paintUrl:'',
       author:'',
-      nameValiFlag:false,
-      authorValiFlag:false,
-      priceValiFlag:false,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -41,8 +36,10 @@ export default class UploadCard extends Component {
     this.handleBack = this.handleBack.bind(this);
   }
 
+  field = new Field(this);
+
   componentDidMount() {
-    axios.get(userPaintingUrl + this.state.userId)
+    axios.get('http://localhost:8080/userPaintingsNoPage?userId=2')
       .then((response) => {
         const data = response.data.map((item) => {
           return { label:item.paintName, value:item.id };
@@ -58,39 +55,6 @@ export default class UploadCard extends Component {
       const value = target.value;
       const name = target.name;
 
-      if (name === 'paintName') {
-        if (value === null || value.length === 0) {
-          this.setState({
-            nameValiFlag:true
-          });
-        } else {
-          this.setState({
-            nameValiFlag:false
-          });
-        }
-      }
-      if (name === 'author') {
-        if (value === null || value.length === 0) {
-          this.setState({
-            authorValiFlag:true
-          });
-        } else {
-          this.setState({
-            authorValiFlag:false
-          });
-        }
-      }
-      if (name === 'paintingPrice') {
-        if (/^(?!0+(?:\.0+)?$)(?:[1-9]\d*|0)(?:\.\d{1,2})?$/.test(value)) {
-          this.setState({
-            priceValiFlag:false
-          });
-        } else {
-          this.setState({
-            priceValiFlag:true
-          });
-        }
-      }
       this.setState({
         [name]:value
       });
@@ -105,8 +69,25 @@ export default class UploadCard extends Component {
     this.setState({ type:event.value });
   }
 
-  handleClick = () => {
+  handleClick = (e) => {
     const $this = this;
+    e.preventDefault();
+    console.log('收到表单值：', this.field.getValues());
+    this.field.validate((errors,values) => {
+      axios.post({
+        url:'http://localhost:8080/api/upload',
+        data:{
+          userId:this.state.userId,
+          paintName:this.field.paintName,
+          paintDes:this.field.paintDes,
+          denPaintId:this.field.denPainting,
+          type:this.field.type,
+          paintUrl:this.field.paintUrl,
+          author:this.field.author,
+          regTime: moment().format('YYYY-MM-DD HH:mm:ss')
+        }
+      });
+    });
     axios({
       url:'http://localhost:8080/addPainting',
       method: 'POST',
@@ -116,7 +97,6 @@ export default class UploadCard extends Component {
         paintDes:this.state.paintDes,
         denPaintId:this.state.denPainting,
         type:this.state.type,
-        paintingPrice:this.state.paintingPrice,
         paintUrl:this.state.paintUrl,
         author:this.state.author,
         regTime: moment().format('YYYY-MM-DD HH:mm:ss')
@@ -150,7 +130,7 @@ export default class UploadCard extends Component {
 
   onSuccess = (res, file) => {
     this.setState({
-      uploadStatus:true,
+      uploadSatus:true,
       paintUrl:imageRootPath + res
     });
     console.log('onSuccess callback : ', res, file);
@@ -166,36 +146,35 @@ export default class UploadCard extends Component {
 
   handleBack() {
     this.setState({
-      postSuccess:false,
-      uploadStatus:false,
-      nameValiFlag:false,
-      authorValiFlag:false,
-      priceValiFlag:false,
-      paintName:'',
-      paintDes:'',
-      paintingPrice:'',
-      denPainting:null,
-      type:null,
-      paintUrl:'',
-      author:'',
+      postSuccess:false
     });
   }
 
   render() {
-    const { uploadStatus, postSuccess, responseData } = this.state;
+    const init = this.field.init;
+    const { uploadSatus, postSuccess, responseData } = this.state;
+    const formItemLayout = {
+      labelCol: { fixedSpan: 0 },
+      wrapperCol: { span: 20 }
+    };
+
+    const insetLayout = {
+      labelCol: { fixedSpan: 0 },
+      wrapperCol:{ span:20 }
+    };
     return (
       postSuccess ?
         <PaintingChain dataSource={responseData} back={this.handleBack} /> :
         <div>
           <IceContainer title="上传画作">
-            <Row justify="center">
-              <Col span="6" offset="3">
+            <Form style={{ width:'600px', marginLeft:'auto', marginRight:'auto' }} direction="hoz" field={this.field}>
+              <FormItem>
                 <Core
                   style={{
                     display: 'block',
                     textAlign: 'center',
                     width: 300,
-                    height: 285,
+                    height: 250,
                     lineHeight: '200px',
                     border: '1px dashed #aaa',
                     borderRadius: '5px',
@@ -214,87 +193,51 @@ export default class UploadCard extends Component {
                   onSuccess={this.onSuccess}
                   onError={this.onError}
                   onAbort={this.onAbort}
+                  {...init('paintUrl', {
+                    valueName: 'fileList',
+                    getValueFromEvent: this.getValueFromFile
+                  })}
                 >
-                  {uploadStatus ?
-                    <Img width={300} height={285} type="contain" src={this.state.paintUrl} /> : '支持点击或者拖拽上传'}
+                  {uploadSatus ?
+                    <Img width={300} height={250} type="contain" src={this.state.paintUrl} /> : '支持点击或者拖拽上传'}
                 </Core>
-              </Col>
-              <Col>
+              </FormItem>
+              <FormItem {...formItemLayout} >
                 <Row>
-                  <Col className={styles.colStyle} span="7">
+                  <Col>
+                    <FormItem labelAlign="inset" {...insetLayout} >
                     <Input
                       name="paintName"
                       placeholder="请输入作品名称"
                       style={{ width: 200, marginBottom: 5 }}
                       value={this.state.paintName}
                       onChange={this.handleInputChange}
+                      {...init('paintName', {
+                        rules: [{ required: true, trigger: 'onBlur' }]
+                      })}
                     />
+                    </FormItem>
                   </Col>
-                  {
-                    this.state.nameValiFlag ? <Col className={styles.colStyle}><IceLabel status="danger">作品名称不能为空</IceLabel></Col> : null
-                  }
                 </Row>
                 <Row>
-                  <Col className={styles.colStyle} span="7">
+                  <Col>
+                    <FormItem labelAlign="inset" {...insetLayout} >
                     <Input
                       name="author"
                       placeholder="请输入作品作者"
                       style={{ width: 200, marginBottom: 5 }}
                       value={this.state.author}
                       onChange={this.handleInputChange}
+                      {...init('author', {
+                        rules: [{ required: true, trigger: 'onBlur' }]
+                      })}
                     />
-                  </Col>
-                  {
-                    this.state.authorValiFlag ? <Col className={styles.colStyle}><IceLabel status="danger">作品作者不能为空</IceLabel></Col> : null
-                  }
-                </Row>
-                <Row>
-                  <Col className={styles.colStyle} span="7">
-                    <Input
-                      name="paintingPrice"
-                      placeholder="请输入作品价格"
-                      style={{ width: 200, marginBottom: 5 }}
-                      value={this.state.paintingPrice}
-                      onChange={this.handleInputChange}
-                    />
-                  </Col>
-                  {
-                    this.state.priceValiFlag ? <Col className={styles.colStyle}><IceLabel status="danger">请输入数字</IceLabel></Col> : null
-                  }
-
-                </Row>
-                <Row>
-                  <Col className={styles.colStyle}>
-                    <Select
-                      name="denPainting"
-                      placeholder="请选择依赖的作品"
-                      style={{ width: 200, marginBottom: 5 }}
-                      dataSource={this.state.paintingSelectData}
-                      value={this.state.denPainting}
-                      onChange={this.handleDenPainting}
-                    />
+                    </FormItem>
                   </Col>
                 </Row>
                 <Row>
-                  <Col className={styles.colStyle}>
-                    <Select
-                      name="type"
-                      defaultValue="1"
-                      placeholder="请选择作品类型"
-                      style={{ width: 200, marginBottom: 5 }}
-                      value={this.state.type}
-                      onChange={this.handleType}
-                    >
-                      <li value="1">印象画</li>
-                      <li value="2">山水画</li>
-                      <li value="3">抽象画</li>
-                      <li value="4">威尼斯画</li>
-                      <li value="5">中国黄派画</li>
-                    </Select>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col className={styles.colStyle}>
+                  <Col>
+                    <FormItem labelAlign="inset" {...insetLayout} >
                     <Input
                       name="paintDes"
                       multiple
@@ -304,11 +247,48 @@ export default class UploadCard extends Component {
                       style={{ width: 200, marginBottom: 5 }}
                       value={this.state.paintDes}
                       onChange={this.handleInputChange}
+                      {...init('paintDes')}
                     />
+                    </FormItem>
                   </Col>
                 </Row>
-              </Col>
-            </Row>
+                <Row>
+                  <Col>
+                    <FormItem labelAlign="inset" {...insetLayout} >
+                    <Select
+                      name="denPainting"
+                      placeholder="请选择依赖的作品"
+                      style={{ width: 200, marginBottom: 5 }}
+                      dataSource={this.state.paintingSelectData}
+                      value={this.state.denPainting}
+                      onChange={this.handleDenPainting}
+                      {...init('denPainting')}
+                    />
+                    </FormItem>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <FormItem labelAlign="inset" {...insetLayout} >
+                    <Select
+                      name="type"
+                      defaultValue="1"
+                      placeholder="请选择作品类型"
+                      style={{ width: 200, marginBottom: 5 }}
+                      value={this.state.type}
+                      onChange={this.handleType}
+                      {...init('type')}
+                    >
+                      <li value="1">印象画</li>
+                      <li value="2">山水画</li>
+                      <li value="3">抽象画</li>
+                      <li value="4">威尼斯画</li>
+                      <li value="5">中国黄派画</li>
+                    </Select>
+                    </FormItem>
+                  </Col>
+                </Row>
+              </FormItem>
             <Row justify="center" style={{ marginTop: 16 }}>
               <Col offset="7">
                 <Button type="primary" onClick={this.handleClick}>
@@ -316,6 +296,7 @@ export default class UploadCard extends Component {
                 </Button>
               </Col>
             </Row>
+            </Form>
           </IceContainer>
         </div>
     );
