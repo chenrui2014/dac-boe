@@ -6,9 +6,11 @@ import IceContainer from '@icedesign/container';
 import DataBinder from '@icedesign/data-binder';
 import EditorInfoDialog from './EditorInfoDialog';
 
+import { ApiHost } from '../../../../daeConfig';
+
 @DataBinder({
   paintData: {
-    url: 'http://172.100.0.146:8080/paintingsPerPage',
+    url: `${ApiHost}/paintingsPerPage`,
     method: 'get',
     params: {
       page: 0,
@@ -36,7 +38,7 @@ import EditorInfoDialog from './EditorInfoDialog';
       page: 0,
     },
     updateTableData:{
-      url:'http://172.100.0.146:8080/painting',
+      url:`${ApiHost}/painting`,
       method:'put'
     }
   }
@@ -91,7 +93,7 @@ export default class PaintingsTable extends Component {
       value: record,
       onOk: (value) => {
         axios({
-          url:'http://172.100.0.146:8080/addPainting',
+          url:`${ApiHost}/addPainting`,
           method: 'POST',
           data: {
             userId:2,

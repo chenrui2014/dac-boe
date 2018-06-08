@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { Table, Pagination } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import DataBinder from '@icedesign/data-binder';
+import { ApiHost } from '../../../../daeConfig';
 
 import { enquireScreen } from 'enquire-js';
 
 @DataBinder({
   userTransactionData: {
-    url: 'http://172.100.0.146:8080/userTransPerPage',
+    url: `${ApiHost}/userTransPerPage`,
     method: 'get',
     params: {
       userId: 2,

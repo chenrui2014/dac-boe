@@ -6,12 +6,13 @@ import IceLabel from '@icedesign/label';
 import axios from 'axios';
 import qs from 'qs';
 
+import { ApiHost } from '../../../../daeConfig';
 import PaintingChain from '../PaintingChain';
 
 const { Core } = Upload;
 const { Row, Col } = Grid;
-const imageRootPath = 'http://172.100.0.146:8080/images/';
-const userPaintingUrl = 'http://172.100.0.146:8080/userPaintingsNoPage?userId=';
+const imageRootPath = `${ApiHost}/images/`;
+const userPaintingUrl = `${ApiHost}/userPaintingsNoPage?userId=`;
 
 export default class UploadCard extends Component {
   constructor(props, context) {
@@ -108,7 +109,7 @@ export default class UploadCard extends Component {
   handleClick = () => {
     const $this = this;
     axios({
-      url:'http://172.100.0.146:8080/addPainting',
+      url:`${ApiHost}/addPainting`,
       method: 'POST',
       data: {
         userId:this.state.userId,
@@ -201,7 +202,7 @@ export default class UploadCard extends Component {
                     borderRadius: '5px',
                     fontSize: '12px',
                   }}
-                  action="http://localhost:8080/api/single/upload"
+                  action={`${ApiHost}/api/single/upload`}
                   accept="image/png, image/jpg, image/jpeg, image/gif, image/bmp"
                   multiple
                   dragable
