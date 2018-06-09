@@ -9,6 +9,8 @@ import {
 
 import Img from '@icedesign/img';
 
+import cpImg from '../../../../../public/images/webwxgetmsgimg.jpg';
+
 const { Row, Col } = Grid;
 
 export default class PaintingChain extends Component {
@@ -29,9 +31,48 @@ export default class PaintingChain extends Component {
     this.onClick = this.onClick.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
+  componentDidMount() {
+    const { dataSource } = this.props;
+    const canvas = this.refs.canvas;
+    const cc = canvas.getContext('2d');
+
+    const img = new Image();
+    img.src = cpImg;
+    img.onload = async function () {
+      await cc.drawImage(img, 0, 0);
+      cc.fillStyle = "black";
+      cc.font = " 10px '微软雅黑'";
+      cc.fillText(dataSource[0].depCerticateId, 238, 245);
+      cc.fillStyle = "red";
+      cc.fillText(dataSource[0].transactionId, 238, 290);
+      cc.font = "bold 24px '宋体','微软雅黑'";
+      cc.fillText(dataSource[0].paintName, 320, 338);
+      cc.fillText(dataSource[0].author, 320, 383);
+      cc.fillText(dataSource[0].regTime, 320, 427);
+      cc.fillText("京东方博艺区块链网络", 320, 468);
+    };
+  }
   onClick(currentStep) {
     console.log(currentStep);
-
+    const { dataSource } = this.props;
+    const canvas = this.refs.canvas;
+    const cc = canvas.getContext('2d');
+    const rect = canvas.getBoundingClientRect();
+    cc.clearRect(0, 0, rect.width, rect.height);
+    const img = new Image();
+    img.src = cpImg;
+    img.onload = async function () {
+      await cc.drawImage(img, 0, 0);
+      cc.fillStyle = "black";
+      cc.font = " 10px '微软雅黑'";
+      cc.fillText(dataSource[0].depCerticateId, 238, 245);
+      cc.fillStyle = "red";
+      cc.fillText(dataSource[0].transactionId, 238, 290);
+      cc.fillText(dataSource[currentStep].paintName, 320, 338);
+      cc.fillText(dataSource[currentStep].author, 320, 383);
+      cc.fillText(dataSource[currentStep].regTime, 320, 427);
+      cc.fillText("京东方博艺区块链网络", 320, 468);
+    };
     this.setState({
       step: currentStep
     });
@@ -45,6 +86,7 @@ export default class PaintingChain extends Component {
     return (
       <div>
         <h3 style={styles.formTitle}>{dataSource[step].paintName}</h3>
+        <canvas ref="canvas" width="930" height="650" />
         <Img src={dataSource[step].paintUrl} />
       </div>
     );
@@ -53,6 +95,7 @@ export default class PaintingChain extends Component {
 
   render() {
     const { dataSource } = this.props;
+
     return (
       <div>
         <IceContainer title="版权树">

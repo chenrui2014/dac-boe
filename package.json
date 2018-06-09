@@ -55,9 +55,9 @@
     "entry": "src/index.js"
   },
   "scaffoldConfig": {
-    "name": "ice-design-pro",
-    "title": "ICE Design Pro",
-    "screenshot": "https://img.alicdn.com/tfs/TB1_bulmpOWBuNjy0FiXXXFxVXa-1920-1080.png"
+    "name": "博艺区块链网络",
+    "title": "博艺区块链网络",
+    "screenshot": "./public/images/logo.png"
   },
   "title": "digital copyright"
 }

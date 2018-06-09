@@ -13,7 +13,7 @@ import { enquireScreen } from 'enquire-js';
     method: 'get',
     params: {
       page: 0,
-      size: 2
+      size: 10
     },
     responseFormatter:(responseHandler, res, originResponse) => {
       const newRes = {

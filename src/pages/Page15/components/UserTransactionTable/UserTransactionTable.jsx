@@ -11,7 +11,7 @@ import { enquireScreen } from 'enquire-js';
     url: `${ApiHost}/userTransPerPage`,
     method: 'get',
     params: {
-      userId: 2,
+      userId: localStorage.getItem('user'),
       page: 0,
       size: 10
     },

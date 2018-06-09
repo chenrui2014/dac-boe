@@ -3,18 +3,18 @@ import { Table, Pagination } from '@icedesign/base';
 import IceContainer from '@icedesign/container';
 import DataBinder from '@icedesign/data-binder';
 
-
 import { ApiHost } from '../../../../daeConfig';
+
 import { enquireScreen } from 'enquire-js';
 
 @DataBinder({
-  userPaintData: {
-    url: `${ApiHost}/userPaintingsPerPage`,
+  transactionData: {
+    url: `${ApiHost}/userIncomesPerPage`,
     method: 'get',
     params: {
-      userId: localStorage.getItem('user'),
+      userId:localStorage.getItem('user'),
       page: 0,
-      size: 10
+      size: 2
     },
     responseFormatter:(responseHandler, res, originResponse) => {
       const newRes = {
@@ -40,7 +40,7 @@ import { enquireScreen } from 'enquire-js';
   },
 })
 
-export default class UserPaintTable extends Component {
+export default class IncomeTable extends Component {
   static propTypes = {};
 
   static defaultProps = {};
@@ -70,7 +70,7 @@ export default class UserPaintTable extends Component {
   };
 
   fetchData = ({ page }) => {
-    this.props.updateBindingData('userPaintData', {
+    this.props.updateBindingData('transactionData', {
       params: {
         page,
       },
@@ -83,42 +83,31 @@ export default class UserPaintTable extends Component {
     });
   };
 
-  paintImgRender = (value, index, record) => {
-    return (
-      <div style={styles.media}>
-        {record.paintUrl ? <img alt="" src={record.paintUrl} style={styles.mediaSide} /> : null }
-        <div style={styles.mediaContent}>{record.paintName}</div>
-      </div>
-    );
-  }
-
   render() {
-    const userPaintData = this.props.bindingData.userPaintData;
+    const transactionData = this.props.bindingData.transactionData;
 
     return (
       <div className="simple-table">
-        <IceContainer title="用户作品">
+        <IceContainer title="收益明细">
           <Table
-            dataSource={userPaintData.list}
-            isLoading={userPaintData.__loading} // eslint-disable-line
+            dataSource={transactionData.list}
+            isLoading={transactionData.__loading} // eslint-disable-line
             className="basic-table"
             hasBorder={false}
           >
-            <Table.Column cell={this.paintImgRender} title="画作名称" dataIndex="paintName" width={200} />
-            <Table.Column title="画作作者" dataIndex="author" width={85} />
-            <Table.Column title="画作所有者" dataIndex="userName" width={100} />
-            <Table.Column title="数字指纹" dataIndex="digFingerPrint" width={100} />
-            <Table.Column title="交易号" dataIndex="transactionId" width={150} />
-            <Table.Column title="作品类型" dataIndex="type" width={100} />
-            <Table.Column title="作品定价" dataIndex="paintingPrice" width={100} />
-            <Table.Column title="版权证书" dataIndex="depCerticateId" width={150} />
-            <Table.Column title="生成时间" dataIndex="regTime" width={150} />
+            <Table.Column title="用户名" dataIndex="userName" width={300} />
+            <Table.Column title="交易画作" dataIndex="paintingName" width={85} />
+            <Table.Column title="交易ID" dataIndex="transactionHash" width={85} />
+            <Table.Column title="交易金额" dataIndex="tranAmount" width={150} />
+            <Table.Column title="分成比例" dataIndex="rate" width={150} />
+            <Table.Column title="分成金额" dataIndex="income" width={150} />
+            <Table.Column title="交易时间" dataIndex="tranTime" width={150} />
           </Table>
           <div style={styles.paginationWrapper}>
             <Pagination
-              current={userPaintData.page + 1}
-              pageSize={userPaintData.size}
-              total={userPaintData.total}
+              current={transactionData.page + 1}
+              pageSize={transactionData.size}
+              total={transactionData.total}
               onChange={this.changePage}
               type={this.state.isMobile ? 'simple' : 'normal'}
             />
@@ -138,18 +127,4 @@ const styles = {
     textAlign: 'right',
     paddingTop: '26px',
   },
-
-  media: {
-    overflow: 'hidden'
-  },
-  mediaSide: {
-    width:'48px',
-    height:'48px',
-    float: 'left',
-    marginRight: '10px'
-  },
-  mediaContent: {
-    overflow:'hidden',
-    verticalAlign:'top'
-  }
 };

@@ -83,10 +83,21 @@ class FormDialog extends Component {
                 <span style={styles.label}>画作哈希</span>
               </Col>
               <Col span={18}>
-                <IceFormBinder >
+                <IceFormBinder>
                   <Input style={styles.formField} name="paintHash" disabled />
                 </IceFormBinder>
                 <IceFormError name="paintHash" />
+              </Col>
+            </Row>
+            <Row>
+              <Col span={4}>
+                <span style={styles.label}>画作定价</span>
+              </Col>
+              <Col span={18}>
+                <IceFormBinder>
+                  <Input style={styles.formField} name="paintingPrice" disabled />
+                </IceFormBinder>
+                <IceFormError name="paintingPrice" />
               </Col>
             </Row>
             <Row>

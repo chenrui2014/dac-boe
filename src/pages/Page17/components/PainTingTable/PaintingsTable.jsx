@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Table, Pagination, Button, moment } from '@icedesign/base';
+import { Table, Pagination, Button, moment, Feedback } from '@icedesign/base';
 import { enquireScreen } from 'enquire-js';
 import axios from 'axios/index';
 import IceContainer from '@icedesign/container';
 import DataBinder from '@icedesign/data-binder';
+import qs from 'qs';
+import { withRouter } from 'react-router-dom';
 import EditorInfoDialog from './EditorInfoDialog';
 
 import { ApiHost } from '../../../../daeConfig';
@@ -44,15 +46,17 @@ import { ApiHost } from '../../../../daeConfig';
   }
 })
 
-export default class PaintingsTable extends Component {
+class PaintingsTable extends Component {
   static propTypes = {};
 
   static defaultProps = {};
 
   constructor(props) {
     super(props);
+    const userpaId = localStorage.getItem('user');
     this.state = {
       isMobile: false,
+      userId:userpaId
     };
   }
 
@@ -93,41 +97,26 @@ export default class PaintingsTable extends Component {
       value: record,
       onOk: (value) => {
         axios({
-          url:`${ApiHost}/addPainting`,
+          url:`${ApiHost}/addTran`,
           method: 'POST',
           data: {
-            userId:2,
-            paintName:record.paintName,
-            paintDes:record.paintDes,
-            denPaintId:record.denPainting,
-            type:record.type,
-            paintUrl:record.paintUrl,
-            author:record.author,
-            regTime: moment().format('YYYY-MM-DD HH:mm:ss')
+            initiatorUserId:this.state.userId,
+            receiverUserId:record.userId,
+            paintingId:record.id,
+            tranAmount:record.paintingPrice,
+            genTime: moment().format('YYYY-MM-DD HH:mm:ss')
           }
         }).then((response) => {
-          console.log(response);
-          // 更新数据
-          this.props.updateBindingData(
-            'updateTableData',
-            {
-              data: {
-                // 复杂数据结构需要 JSON stringify
-                newItem: JSON.stringify(value),
-              },
-            },
-            () => {
-              // 更新完成之后，可以重新刷新列表接口
-              this.props.updateBindingData('paintData', {
-                data: {
-                  page: 1,
-                },
-              });
-              EditorInfoDialog.hide();
-            }
-          );
+          const body = response.data;
+          const bodyData = qs.parse(body);
+          if (bodyData.data != null && bodyData.data.length > 0) {
+            this.props.history.push('/page18');
+            Feedback.toast.success('购买成功！');
+          }
+          EditorInfoDialog.hide();
         }).catch((error) => {
-          console.log(error);
+          Feedback.toast.success('购买失败！' + error.message);
+          EditorInfoDialog.hide();
         });
       },
       onClose: () => {
@@ -252,3 +241,4 @@ const styles = {
     verticalAlign:'top'
   }
 };
+export default withRouter(PaintingsTable);
