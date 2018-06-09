@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { ApiHost } from '../../daeConfig';
 
 export default class Page19 extends Component {
   constructor(props) {
@@ -11,7 +12,7 @@ export default class Page19 extends Component {
     const cc = canvas.getContext('2d');
 
     const img = new Image();
-    img.src = 'http://localhost:8080/images/1c3cc28846e3adf9ffd328cf69df8090.jpg';
+    img.src = `${ApiHost}/images/44dc639387be85150e3306f21b374f0d.jpg`;
     img.onload = function () {
       cc.drawImage(img, 0, 0);
       cc.fillStyle = "red";

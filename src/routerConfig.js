@@ -8,11 +8,17 @@ import Page16 from './pages/Page16';
 import Page17 from './pages/Page17';
 import Page18 from './pages/Page18';
 import Page19 from './pages/Page19';
+import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 
 const routerConfig = [
   {
     path: '/',
+    layout: null,
+    component: Login,
+  },
+  {
+    path: '/main',
     layout: HeaderAsideFooterResponsiveLayout,
     component: Page15,
   },

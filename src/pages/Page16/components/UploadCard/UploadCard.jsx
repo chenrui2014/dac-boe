@@ -12,17 +12,18 @@ import PaintingChain from '../PaintingChain';
 const { Core } = Upload;
 const { Row, Col } = Grid;
 const imageRootPath = `${ApiHost}/images/`;
-const userPaintingUrl = `${ApiHost}/userPaintingsNoPage?userId=`;
+const userPaintingUrl = `${ApiHost}/paintingsOrder`;
 
 export default class UploadCard extends Component {
   constructor(props, context) {
     super(props, context);
+    const userpaId = localStorage.getItem('user');
     this.state = {
       postSuccess: false,
       responseData: [],
       uploadStatus: false,
       paintingSelectData: [],
-      userId:2,
+      userId:userpaId,
       paintName:'',
       paintDes:'',
       paintingPrice:'',
@@ -43,7 +44,7 @@ export default class UploadCard extends Component {
   }
 
   componentDidMount() {
-    axios.get(userPaintingUrl + this.state.userId)
+    axios.get(userPaintingUrl)
       .then((response) => {
         const data = response.data.map((item) => {
           return { label:item.paintName, value:item.id };
