@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { Grid } from '@icedesign/base';
+import axios from 'axios/index';
+
+
+import { ApiHost } from '../../../../daeConfig';
 
 const { Row, Col } = Grid;
+const bciUrl = `${ApiHost}/bci`;
 
 export default class RealTimeStatistics extends Component {
   static displayName = 'RealTimeStatistics';
@@ -12,54 +17,65 @@ export default class RealTimeStatistics extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      height:0,
+      currentBlockHash:'',
+      previousBlockHash:'',
+      endorser:''
+    };
+  }
+
+  componentDidMount() {
+    setInterval(() => {
+      axios.get(bciUrl)
+        .then((response) => {
+          const data = response.data;
+          this.setState({
+            height:data.height,
+            currentBlockHash:data.currentBlockHash,
+            previousBlockHash:data.previousBlockHash,
+            endorser:data.endorser
+          });
+        });
+    }, 5000);
   }
 
   render() {
     return (
       <div className="real-time-statistics">
         <Row wrap gutter="20" style={styles.items}>
-          <Col xxs="24" s="12" l="6">
+          <Col xxs="24" s="12" l="8">
             <div style={{ ...styles.itemBody, ...styles.green }}>
               <div style={styles.itemTitle}>
                 <p style={styles.titleText}>当前区块高度</p>
                 <span style={styles.tag}>实时</span>
               </div>
               <div style={styles.itemContent}>
-                <h2 style={styles.itemNum}>7,993</h2>
+                <h2 style={styles.itemNum}>{this.state.height}</h2>
+                <label style={styles.itemBC}>{`当前区块：${this.state.currentBlockHash}`}</label><br />
+                <label style={styles.itemBC}>{`上一区块：${this.state.previousBlockHash}`}</label>
               </div>
             </div>
           </Col>
-          <Col xxs="24" s="12" l="6">
+          <Col xxs="24" s="12" l="8">
             <div style={{ ...styles.itemBody, ...styles.lightBlue }}>
               <div style={styles.itemTitle}>
                 <p style={styles.titleText}>总交易数</p>
                 <span style={styles.tag}>实时</span>
               </div>
               <div style={styles.itemContent}>
-                <h2 style={styles.itemNum}>3,112</h2>
+                <h2 style={styles.itemNum}>31</h2>
               </div>
             </div>
           </Col>
-          <Col xxs="24" s="12" l="6">
+          <Col xxs="24" s="12" l="8">
             <div style={{ ...styles.itemBody, ...styles.darkBlue }}>
               <div style={styles.itemTitle}>
                 <p style={styles.titleText}>节点数</p>
                 <span style={styles.tag}>实时</span>
               </div>
               <div style={styles.itemContent}>
-                <h2 style={styles.itemNum}>908</h2>
-              </div>
-            </div>
-          </Col>
-          <Col xxs="24" s="12" l="6">
-            <div style={{ ...styles.itemBody, ...styles.navyBlue }}>
-              <div style={styles.itemTitle}>
-                <p style={styles.titleText}>合约数</p>
-                <span style={styles.tag}>实时</span>
-              </div>
-              <div style={styles.itemContent}>
-                <h2 style={styles.itemNum}>263</h2>
+                <h2 style={styles.itemNum}>6</h2>
               </div>
             </div>
           </Col>
@@ -104,6 +120,10 @@ const styles = {
   itemNum: {
     margin: '16px 0',
     fontSize: '32px',
+  },
+  itemBC: {
+    margin: '10px 0',
+    fontSize: '10px',
   },
   total: {
     margin: 0,

@@ -42,9 +42,9 @@ export default class PaintingChain extends Component {
       await cc.drawImage(img, 0, 0);
       cc.fillStyle = "black";
       cc.font = " 10px '微软雅黑'";
-      cc.fillText(dataSource[0].depCerticateId, 238, 245);
+      cc.fillText(dataSource[0].depCerticateId, 238, 247);
       cc.fillStyle = "red";
-      cc.fillText(dataSource[0].transactionId, 238, 290);
+      cc.fillText(dataSource[0].transactionId, 238, 282);
       cc.font = "bold 24px '宋体','微软雅黑'";
       cc.fillText(dataSource[0].paintName, 320, 338);
       cc.fillText(dataSource[0].author, 320, 383);
@@ -65,9 +65,10 @@ export default class PaintingChain extends Component {
       await cc.drawImage(img, 0, 0);
       cc.fillStyle = "black";
       cc.font = " 10px '微软雅黑'";
-      cc.fillText(dataSource[0].depCerticateId, 238, 245);
+      cc.fillText(dataSource[0].depCerticateId, 238, 247);
       cc.fillStyle = "red";
-      cc.fillText(dataSource[0].transactionId, 238, 290);
+      cc.fillText(dataSource[0].transactionId, 238, 282);
+      cc.font = "bold 24px '宋体','微软雅黑'";
       cc.fillText(dataSource[currentStep].paintName, 320, 338);
       cc.fillText(dataSource[currentStep].author, 320, 383);
       cc.fillText(dataSource[currentStep].regTime, 320, 427);

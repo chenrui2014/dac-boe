@@ -205,7 +205,6 @@ export default class UploadCard extends Component {
                   }}
                   action={`${ApiHost}/api/single/upload`}
                   accept="image/png, image/jpg, image/jpeg, image/gif, image/bmp"
-                  multiple
                   dragable
                   multipart={{ _token: 'sdj23da' }}
                   headers={{ Authorization: 'user_1' }}
@@ -218,7 +217,7 @@ export default class UploadCard extends Component {
                   onAbort={this.onAbort}
                 >
                   {uploadStatus ?
-                    <Img width={300} height={285} type="contain" src={this.state.paintUrl} /> : '支持点击或者拖拽上传'}
+                    <Img ref="upImg" width={300} height={285} type="contain" src={this.state.paintUrl} /> : '支持点击或者拖拽上传'}
                 </Core>
               </Col>
               <Col>

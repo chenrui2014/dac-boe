@@ -109,7 +109,7 @@ class PaintingsTable extends Component {
         }).then((response) => {
           const body = response.data;
           const bodyData = qs.parse(body);
-          if (bodyData.data != null && bodyData.data.length > 0) {
+          if (bodyData.data != null) {
             this.props.history.push('/page18');
             Feedback.toast.success('购买成功！');
           }

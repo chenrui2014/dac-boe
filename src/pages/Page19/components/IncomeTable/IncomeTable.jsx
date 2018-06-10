@@ -14,7 +14,7 @@ import { enquireScreen } from 'enquire-js';
     params: {
       userId:localStorage.getItem('user'),
       page: 0,
-      size: 2
+      size: 10
     },
     responseFormatter:(responseHandler, res, originResponse) => {
       const newRes = {
@@ -95,12 +95,11 @@ export default class IncomeTable extends Component {
             className="basic-table"
             hasBorder={false}
           >
-            <Table.Column title="用户名" dataIndex="userName" width={300} />
+            <Table.Column title="用户名" dataIndex="userName" width={200} />
             <Table.Column title="交易画作" dataIndex="paintingName" width={85} />
-            <Table.Column title="交易ID" dataIndex="transactionHash" width={85} />
-            <Table.Column title="交易金额" dataIndex="tranAmount" width={150} />
-            <Table.Column title="分成比例" dataIndex="rate" width={150} />
-            <Table.Column title="分成金额" dataIndex="income" width={150} />
+            <Table.Column title="交易ID" dataIndex="transactionHash" width={285} />
+            <Table.Column title="交易金额" dataIndex="tranAmount" width={100} />
+            <Table.Column title="分成金额" dataIndex="income" width={100} />
             <Table.Column title="交易时间" dataIndex="tranTime" width={150} />
           </Table>
           <div style={styles.paginationWrapper}>

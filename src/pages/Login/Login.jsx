@@ -13,6 +13,8 @@ import qs from 'qs';
 import './Login.scss';
 import { ApiHost } from '../../daeConfig';
 
+import cpImg from '../../../public/images/logo.png';
+
 const { Row, Col } = Grid;
 
 class Login extends Component {
@@ -83,7 +85,7 @@ class Login extends Component {
           <a href="#" style={styles.meta}>
             <img
               style={styles.logo}
-              src={`${ApiHost}/images/f7e9f256e015b7895623b123d13d2917.png`}
+              src={cpImg}
               alt="logo"
             />
             <span style={styles.title}>京东方</span>
