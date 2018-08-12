@@ -1,2 +1,2 @@
 
-export const ApiHost = 'http://172.100.1.25:8080';
+export const ApiHost = 'http://192.168.1.114:8080';
